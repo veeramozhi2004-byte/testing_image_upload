@@ -1,9 +1,10 @@
 import express from "express";
 import multer from "multer";
-import ejs from 'ejs';
 
 const app=express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+app.set("view engine", "ejs");
+
 const storage = multer.diskStorage({
     destination: "uploads/",
     filename: (req, file, cb) => {
@@ -19,10 +20,13 @@ app.get("/", (req, res)=>{
 });
 
 app.post("/upload", upload.single("image"), (req, res) => {
-    console.log(req.file.filename);
-    res.render("image.ejs", {
-        imageUrl: "/" + req.file.filename
-    });
+if (!req.file) {
+    return res.status(400).send("No image was uploaded.");
+}
+console.log(req.file.filename);
+res.render("image.ejs", {
+    imageUrl: "/" + req.file.filename
+});
 });
 
 app.listen(port, ()=>{
