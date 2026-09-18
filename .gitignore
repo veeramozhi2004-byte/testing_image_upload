@@ -1,3 +1,7 @@
 node_modules/
 uploads/
+<<<<<<< HEAD
 .env
+=======
+.env
+>>>>>>> 92a8ed581a1aea87492c80893e6a391e487a6988
